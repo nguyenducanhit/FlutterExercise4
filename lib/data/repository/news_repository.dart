@@ -11,7 +11,7 @@ class NewsRepository {
 
   NewsRepository() {
     _network = Network();
-    streamController = StreamController();
+    streamController = StreamController.broadcast();
   }
 
   Future close() async {

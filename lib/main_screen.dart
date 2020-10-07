@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen>
       body: TabBarView(
         controller: tabController,
         children: [
-          NewsList(),
+          NewsList(newsRepository),
           Container(
             color: Colors.green,
           ),

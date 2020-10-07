@@ -6,27 +6,28 @@ import 'package:flutter/cupertino.dart';
 import 'data/model/news_response.dart';
 
 class NewsList extends StatefulWidget {
+  NewsRepository newsRepository;
+
+  NewsList(this.newsRepository);
+
   @override
   State<StatefulWidget> createState() {
-    return _NewListState();
+    return _NewListState(newsRepository);
   }
 }
 
 class _NewListState extends State<NewsList> {
   NewsRepository newsRepository;
 
-  @override
-  void initState() {
-    super.initState();
-    newsRepository = NewsRepository();
-  }
+
+  _NewListState(this.newsRepository);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return StreamBuilder(
         builder: (context, snapshot) {
-          if (snapshot.hasData || snapshot.data == null) {
+          if (!snapshot.hasData || snapshot.data == null) {
             return Center(
               child: Text("Không có bài viết nào"),
             );
@@ -35,8 +36,9 @@ class _NewListState extends State<NewsList> {
             itemBuilder: (context, index) {
               return new NewsItem((snapshot.data as NewsResponse).articles[index]);
             },
+            itemCount: (snapshot.data as NewsResponse).articles.length,
           );
         },
-        stream: newsRepository.streamController.stream.asBroadcastStream());
+        stream: newsRepository.streamController.stream);
   }
 }
